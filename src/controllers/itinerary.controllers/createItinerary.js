@@ -101,6 +101,15 @@ export const createItinerary = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Itinerary creation failed, Try after sometime!");
   }
 
+  // Update ExistedPlan's updated at
+  const updatedExistedPlan = await Plan.findByIdAndUpdate(
+    existedPlan._id,
+    {
+      updatedAt: Date.now(),
+    },
+    { new: true }
+  );
+
   // Remove the password field from the user object before sending response
   user.password = undefined;
 
@@ -109,7 +118,7 @@ export const createItinerary = asyncHandler(async (req, res) => {
     new ApiResponse(
       201,
       {
-        plan: existedPlan,
+        plan: updatedExistedPlan,
         itinerary: createdItinerary,
       },
       "Itinerary is created successfully"

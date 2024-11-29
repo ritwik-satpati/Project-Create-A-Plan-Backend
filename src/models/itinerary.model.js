@@ -1,5 +1,6 @@
 // Import necessary libraries
 import mongoose, { Schema } from "mongoose";
+import { planTypes } from "../constants/planTypes.js";
 
 // Define the Itinerary schema
 const itinerarySchema = new Schema(
@@ -35,29 +36,7 @@ const itinerarySchema = new Schema(
           type: {
             type: String,
             required: true, // Ensures that type is provided
-            // enum: [
-            //   "Airport",
-            //   "Railway Station",
-            //   "Offbeat Location",
-            //   "Site Scene",
-            //   "City Visit",
-            //   "View Point",
-            //   "Nature",
-            //   "Park",
-            //   "Botanical Garden",
-            //   "Forest",
-            //   "Sea Beach",
-            //   "Historical Place",
-            //   "Fort",
-            //   "Island",
-            //   "Temple",
-            //   "Church",
-            //   "Masjid",
-            //   "Activity",
-            //   "Water Activity",
-            //   "Trek",
-            //   "Stay",
-            // ],
+            enum: planTypes
           },
 
           // Details of the plan (e.g., "Visit the museum")

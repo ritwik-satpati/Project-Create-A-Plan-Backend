@@ -12,12 +12,22 @@ export const getItinerary = asyncHandler(async (req, res) => {
   const { planId } = req.params;
 
   // Find existedPlan with its id
-  const existedPlan = await Plan.findById(planId);
+  let existedPlan = await Plan.findById(planId).populate({
+    path: "createdBy",
+    select: "_id name",
+  });
 
   // Throw error if existedPlan not found
   if (!existedPlan) {
     throw new ApiError(404, "Plan is not found!");
   }
+
+  // Reformat the existedPlan
+  existedPlan = {
+    ...existedPlan.toObject(), // Convert Mongoose document to plain object
+    createdBy: existedPlan.createdBy._id,
+    createdByName: existedPlan.createdBy.name,
+  };
 
   // Find existedItinerary with its id
   const existedItinerary = await Itinerary.findById(planId);
@@ -37,7 +47,6 @@ export const getItinerary = asyncHandler(async (req, res) => {
       req.cookies?.userAccessToken ||
       req.header("Authorization")?.replace("Bearer ", "");
 
-    console.log(token);
     if (!token) {
       // throw new ApiError(300, "Plan is not Public, need to Login first!");
       return res.status(200).json(

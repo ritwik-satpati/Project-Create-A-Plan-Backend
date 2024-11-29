@@ -1,0 +1,8 @@
+A. BUG FIXES::
+    1x. User Access Token was not being cleared after logout, only on Server-host, not on Localhost.
+
+B. CHANGES::
+    1. Updated the Plan Models so that the createdBy field now references the User model. 
+    2. Added Plan Types as enumerated options in the Itinerary Model. 
+    3. Updated the Get Itinerary API to include the Creator's (createdBy) id and name in the Plan data values.
+    4. Modified the Create Itinerary and Update Itinerary APIs to update the updatedAt field in the Plan Model.

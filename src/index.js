@@ -43,6 +43,3 @@ connectMongodb()
         console.log("MongoDB connection failed !!!", err);
     });
 
-// Seeders (if needed) 
-// import { createUserByFaker } from "./seeders/user.seeder.js";
-// createUserByFaker(10)
