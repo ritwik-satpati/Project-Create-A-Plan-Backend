@@ -54,6 +54,15 @@ export const updateItinerary = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Itinerary updation failed, Try after sometime!");
   }
 
+  // Update ExistedPlan's updated at
+  const updatedExistedPlan = await Plan.findByIdAndUpdate(
+    existedPlan._id,
+    {
+      updatedAt: Date.now(),
+    },
+    { new: true }
+  );
+
   // Remove the password field from the user object before sending response
   user.password = undefined;
 
@@ -62,7 +71,7 @@ export const updateItinerary = asyncHandler(async (req, res) => {
     new ApiResponse(
       200,
       {
-        plan: existedPlan,
+        plan: updatedExistedPlan,
         itinerary: updatedItinerary,
       },
       "Itinerary is updated successfully"
