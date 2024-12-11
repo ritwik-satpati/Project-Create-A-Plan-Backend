@@ -36,7 +36,7 @@ const itinerarySchema = new Schema(
           type: {
             type: String,
             required: true, // Ensures that type is provided
-            enum: planTypes
+            enum: planTypes,
           },
 
           // Details of the plan (e.g., "Visit the museum")

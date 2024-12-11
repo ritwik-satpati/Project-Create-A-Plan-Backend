@@ -36,7 +36,9 @@ export const bookmarkPlan = asyncHandler(async (req, res) => {
     // Return a successful response with the message
     return res
       .status(200)
-      .json(new ApiResponse(200, {}, "Plan is removed from bookmarks successfully"));
+      .json(
+        new ApiResponse(200, {}, "Plan is removed from bookmarks successfully")
+      );
   }
   // Bookmark ==> if bookmarkPlan is not found
   else {
@@ -48,7 +50,10 @@ export const bookmarkPlan = asyncHandler(async (req, res) => {
 
     // Throw error if newBookmarkPlan is not there
     if (!newBookmarkPlan) {
-      throw new ApiError(400, "Failed to bookmark the plan. Please try again later!");
+      throw new ApiError(
+        400,
+        "Failed to bookmark the plan. Please try again later!"
+      );
     }
 
     // Return a successful response with the bookmarked plan information

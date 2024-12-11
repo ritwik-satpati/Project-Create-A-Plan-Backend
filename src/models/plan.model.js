@@ -1,5 +1,6 @@
 // Import necessary libraries
 import mongoose, { Schema } from "mongoose";
+import { planCategories } from "../constants/planCategories.js";
 
 // Define the Plan schema
 const planSchema = new Schema(
@@ -73,28 +74,20 @@ const planSchema = new Schema(
     //
     category: {
       type: Array,
-      // enum: [
-      //   "Hill Station",
-      //   "Mountain",
-      //   "Sea Beach",
-      //   "Island",
-      //   "Forest",
-      //   "Historical",
-      //   "Pilgrimage",
-      // ],
+      // enum: planCategories,
     },
 
-    //
-    tags: {
-      type: Array,
-      default: undefined,
-    },
+    // //
+    // tags: {
+    //   type: Array,
+    //   default: undefined,
+    // },
 
-    //
-    places: {
-      type: Array,
-      default: undefined,
-    },
+    // //
+    // places: {
+    //   type: Array,
+    //   default: undefined,
+    // },
 
     // Reference to the user who created the plan (ObjectId from the User collection)
     createdBy: {

@@ -12,7 +12,7 @@ export const updatePlan = asyncHandler(async (req, res) => {
   const { planId } = req.params;
 
   // Extract plan information from request body
-  const { name, about, access } = req.body;
+  const { name, about, access, startDate, endDate, category } = req.body;
 
   // Find existedPlan with its id
   const existedPlan = await Plan.findById(planId);
@@ -34,6 +34,9 @@ export const updatePlan = asyncHandler(async (req, res) => {
       name,
       about: about || undefined,
       access,
+      startDate: startDate || undefined,
+      endDate: endDate || undefined,
+      category: category || undefined,
     },
     { new: true }
   );
