@@ -4,6 +4,7 @@ import { ApiResponse } from "../../utils/ApiResponse.js";
 import { Plan } from "../../models/plan.model.js";
 import { Itinerary } from "../../models/itinerary.model.js";
 
+// Sample Itinerary Data
 const sampleItinerary = {
   itinerary: [
     {
@@ -60,6 +61,87 @@ const sampleItinerary = {
   note: "This is a Sample itinerary. Go and Edit your itinerary ...",
 };
 
+// Function - calculateDateGap
+function calculateDateGap(startDate, endDate) {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  // Calculate the difference in milliseconds
+  const differenceInMs = end - start;
+
+  // Convert milliseconds to days
+  const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+
+  // Return differenceInDays
+  return differenceInDays;
+}
+
+// Function - dateString
+function dateString(date, i) {
+  let newDate = new Date(date);
+  // Add i day to the date
+  newDate.setDate(newDate.getDate() + i);
+  // Format the new date as "yyyy-MM-dd"
+  let newDateStr = newDate.toISOString().split("T")[0];
+
+  //Return
+  return newDateStr;
+}
+
+// Function - dynamicItinerary
+function dynamicItinerary(startDate, endDate) {
+  // Get differenceInDays from calculateDateGap function
+  const differenceInDays = calculateDateGap(startDate, endDate);
+  // console.log(differenceInDays)
+
+  // Initialise dynamicItinerary
+  let dynamicItinerary = [
+    {
+      day: 0,
+      date: dateString(startDate, -1),
+      desc: "Starting of the trip",
+      plans: [
+        {
+          type: "Travel",
+          plan: "Start from XXX",
+          time: "22:00",
+          link: "https://google.com",
+        },
+      ],
+    },
+  ];
+
+  // Initialise i for the loop
+  let i;
+  for (i = 1; i <= differenceInDays; i++) {
+    let itinerary = {
+      day: i,
+      date: dateString(startDate, i - 1),
+      desc: `Day ${i} of the trip`,
+      plans: [
+        {
+          type: "Visit",
+          plan: "Visit XXX",
+          time: "10:00",
+          link: "https://google.com",
+        },
+        {
+          type: "Activity",
+          plan: "Activity XXX",
+          time: "12:00",
+          link: "https://google.com",
+        },
+      ],
+    };
+
+    // Add the new in itinerary in dynamicItinerary array
+    dynamicItinerary = [...dynamicItinerary, itinerary];
+  }
+
+  // Return
+  return dynamicItinerary;
+}
+
 // *** Create A Itinerary ***
 export const createItinerary = asyncHandler(async (req, res) => {
   // Retrieve user data from the request object using middleware
@@ -89,10 +171,21 @@ export const createItinerary = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Not authorized to update!");
   }
 
+  // Make Itinerary
+  let itinerary;
+  if (!existedPlan.startDate) {
+    itinerary = sampleItinerary.itinerary;
+  } else {
+    itinerary = dynamicItinerary(existedPlan?.startDate, existedPlan?.endDate);
+  }
+
+  console.log(itinerary);
+  // throw new ApiError(400, "Itinerary creation failed, Try after sometime!");
+
   // Create a new itinerary
   const createdItinerary = await Itinerary.create({
     _id: existedPlan._id,
-    itinerary: sampleItinerary.itinerary,
+    itinerary: itinerary,
     note: sampleItinerary.note,
   });
 

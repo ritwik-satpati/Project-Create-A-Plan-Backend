@@ -23,6 +23,7 @@ const userSchema = new Schema(
     mobile: {
       type: String,
       unique: true,
+      sparse: true,
       trim: true,
     },
     // Gender of the user (optional)
@@ -64,7 +65,10 @@ userSchema.methods.isPasswordCorrect = async function (password) {
 // Method to generate an access token for authentication
 userSchema.methods.generateAccessToken = function () {
   // Ensure the token secret and expiry are set
-  if (!process.env.USER_ACCESS_TOKEN_SECRET || !process.env.USER_ACCESS_TOKEN_EXPIRY) {
+  if (
+    !process.env.USER_ACCESS_TOKEN_SECRET ||
+    !process.env.USER_ACCESS_TOKEN_EXPIRY
+  ) {
     throw new Error("Token secret or expiry not defined");
   }
   return jwt.sign(

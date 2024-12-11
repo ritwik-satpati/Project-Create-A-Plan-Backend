@@ -53,18 +53,17 @@ export const getPlan = asyncHandler(async (req, res) => {
     //     throw new ApiError(404, "No Plan is found!");
     //   }
 
-
     // Setting up Success Message
     let successMessage;
 
     if (existedPlans.length > 0) {
       if (existedPlans.length > 1) {
-        successMessage = `${existedPlans.length} Plans are fetched successfully`
+        successMessage = `${existedPlans.length} Plans are fetched successfully`;
       } else {
-        successMessage = `${existedPlans.length} Plan is fetched successfully`
+        successMessage = `${existedPlans.length} Plan is fetched successfully`;
       }
     } else {
-      successMessage = `No Plan is fetched`
+      successMessage = `No Plan is fetched`;
     }
 
     // Remove the password field from the user object before sending response

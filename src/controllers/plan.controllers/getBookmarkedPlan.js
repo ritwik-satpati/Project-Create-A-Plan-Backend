@@ -92,12 +92,12 @@ export const getBookmarkedPlan = asyncHandler(async (req, res) => {
 
     if (existedBookmarkPlans.length > 0) {
       if (existedBookmarkPlans.length > 1) {
-        successMessage = `${existedBookmarkPlans.length} Bookmarked Plans are fetched successfully`
+        successMessage = `${existedBookmarkPlans.length} Bookmarked Plans are fetched successfully`;
       } else {
-        successMessage = `${existedBookmarkPlans.length} Bookmarked Plan is fetched successfully`
+        successMessage = `${existedBookmarkPlans.length} Bookmarked Plan is fetched successfully`;
       }
     } else {
-      successMessage = `No Plan is Bookmarked`
+      successMessage = `No Plan is Bookmarked`;
     }
 
     // Remove the password field from the user object before sending response

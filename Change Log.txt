@@ -1,8 +1,16 @@
-A. BUG FIXES::
-    1x. User Access Token was not being cleared after logout, only on Server-host, not on Localhost.
+*** 1.0.2.3 ***
+
+A. BUG FIXES::    
 
 B. CHANGES::
-    1. Updated the Plan Models so that the createdBy field now references the User model. 
-    2. Added Plan Types as enumerated options in the Itinerary Model. 
-    3. Updated the Get Itinerary API to include the Creator's (createdBy) id and name in the Plan data values.
-    4. Modified the Create Itinerary and Update Itinerary APIs to update the updatedAt field in the Plan Model.
+    1. Old Register User method renamed to Create User:
+        API: createUser
+        Route: /create
+        Validation: createUserValidation
+    2. Modified Register Method. Check NEW FEATURES C.1 and C.2 for more details. 
+    3. Updated Create Itinerary. Check NEW FEATURES C.3 for details.
+
+C. NEW FEATURES::
+    1. New Register User & Active User methodis added. Email verification required via activation link/token.
+    2. Added additional details - startDate, endDate, category in Plan Model.
+    3. Dynamic Sample Itinerary is added. If both startDate and endDate are included in the plan details in Create Itinerary API.

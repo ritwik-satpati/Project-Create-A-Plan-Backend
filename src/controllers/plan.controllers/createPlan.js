@@ -9,13 +9,16 @@ export const createPlan = asyncHandler(async (req, res) => {
   const { user } = req;
 
   // Extract plan information from request body
-  const { name, about, access } = req.body;
+  const { name, about, access, startDate, endDate, category } = req.body;
 
   // Create a new plan
   const createdPlan = await Plan.create({
     name,
     about: about || undefined,
     access,
+    startDate: startDate || undefined,
+    endDate: endDate || undefined,
+    category: category || undefined,
     createdBy: user._id,
   });
 
