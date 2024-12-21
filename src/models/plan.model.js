@@ -89,11 +89,11 @@ const planSchema = new Schema(
     //   default: undefined,
     // },
 
-    // Reference to the user who created the plan (ObjectId from the User collection)
+    // Reference to the user who created the plan (ObjectId from the CAP_User collection)
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: "CAP_User",
     },
   },
   {
@@ -103,4 +103,4 @@ const planSchema = new Schema(
 );
 
 // Export the Plan model
-export const Plan = mongoose.model("Plan", planSchema);
+export const CAP_Plan = mongoose.model("CAP_Plan", planSchema);

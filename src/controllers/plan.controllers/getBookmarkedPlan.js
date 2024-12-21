@@ -1,8 +1,8 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { Plan } from "../../models/plan.model.js";
-import { Bookmark } from "../../models/bookmark.model.js";
+import { CAP_Plan } from "../../models/plan.model.js";
+import { CAP_Bookmark } from "../../models/bookmark.model.js";
 
 // *** Get A / Multiple Bookmarked Plan ***
 export const getBookmarkedPlan = asyncHandler(async (req, res) => {
@@ -15,7 +15,7 @@ export const getBookmarkedPlan = asyncHandler(async (req, res) => {
   // Get A Bookmark Plan using planId ==> If planId is there
   if (planId) {
     // Find existedBookmarkPlan with its id
-    const existedBookmarkPlan = await Bookmark.findOne({
+    const existedBookmarkPlan = await CAP_Bookmark.findOne({
       user: user._id,
       plan: planId,
     });
@@ -53,7 +53,7 @@ export const getBookmarkedPlan = asyncHandler(async (req, res) => {
   // Get A Bookmark Plan using bookmarkId ==> If bookmarkId is there
   else if (bookmarkId) {
     // Find existedBookmarkPlan with its id
-    const existedBookmarkPlan = await Bookmark.findById(bookmarkId);
+    const existedBookmarkPlan = await CAP_Bookmark.findById(bookmarkId);
 
     // Throw error if existedBookmarkPlan not found
     if (!existedBookmarkPlan) {
@@ -78,7 +78,7 @@ export const getBookmarkedPlan = asyncHandler(async (req, res) => {
   // Get Multiple Bookmark Plans ==> If planId & bookmarkId both are not there
   else {
     // Find existedBookmarkPlan with its id
-    const existedBookmarkPlans = await Bookmark.find({ user: user._id })
+    const existedBookmarkPlans = await CAP_Bookmark.find({ user: user._id })
       .sort({ updatedAt: -1 })
       .populate("plan", "_id name");
 

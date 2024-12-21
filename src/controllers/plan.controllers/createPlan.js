@@ -1,7 +1,7 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { Plan } from "../../models/plan.model.js";
+import { CAP_Plan } from "../../models/plan.model.js";
 
 // *** Create A Plan ***
 export const createPlan = asyncHandler(async (req, res) => {
@@ -12,7 +12,7 @@ export const createPlan = asyncHandler(async (req, res) => {
   const { name, about, access, startDate, endDate, category } = req.body;
 
   // Create a new plan
-  const createdPlan = await Plan.create({
+  const createdPlan = await CAP_Plan.create({
     name,
     about: about || undefined,
     access,

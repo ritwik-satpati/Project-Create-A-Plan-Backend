@@ -73,4 +73,4 @@ const itinerarySchema = new Schema(
 );
 
 // Export the Itinerary model
-export const Itinerary = mongoose.model("Itinerary", itinerarySchema);
+export const CAP_Itinerary = mongoose.model("CAP_Itinerary", itinerarySchema);

@@ -1,8 +1,8 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { Plan } from "../../models/plan.model.js";
-import { Bookmark } from "../../models/bookmark.model.js";
+import { CAP_Plan } from "../../models/plan.model.js";
+import { CAP_Bookmark } from "../../models/bookmark.model.js";
 
 // *** Bookmark / Unbookmark A Plan ***
 export const bookmarkPlan = asyncHandler(async (req, res) => {
@@ -16,7 +16,7 @@ export const bookmarkPlan = asyncHandler(async (req, res) => {
   const { planId } = req.body;
 
   // Find existedPlan with its id
-  const existedPlan = await Plan.findById(planId);
+  const existedPlan = await CAP_Plan.findById(planId);
 
   // Throw error if existedPlan not found
   if (!existedPlan) {
@@ -24,14 +24,14 @@ export const bookmarkPlan = asyncHandler(async (req, res) => {
   }
 
   // Find bookmarkPlan with plan id & user id
-  const bookmarkPlan = await Bookmark.findOne({
+  const bookmarkPlan = await CAP_Bookmark.findOne({
     plan: planId,
     user: user._id,
   });
 
   // Un-bookmark ==> if bookmarkPlan is found
   if (bookmarkPlan) {
-    await Bookmark.findByIdAndDelete(bookmarkPlan);
+    await CAP_Bookmark.findByIdAndDelete(bookmarkPlan);
 
     // Return a successful response with the message
     return res
@@ -43,7 +43,7 @@ export const bookmarkPlan = asyncHandler(async (req, res) => {
   // Bookmark ==> if bookmarkPlan is not found
   else {
     // Create a bookmark data
-    const newBookmarkPlan = await Bookmark.create({
+    const newBookmarkPlan = await CAP_Bookmark.create({
       plan: planId,
       user: user._id,
     });

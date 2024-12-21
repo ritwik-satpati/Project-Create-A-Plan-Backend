@@ -13,6 +13,7 @@ import { userAuth } from "../middlewares/userAuth.middleware.js";
 import { createItinerary } from "../controllers/itinerary.controllers/createItinerary.js";
 import { getItinerary } from "../controllers/itinerary.controllers/getItinerary.js";
 import { updateItinerary } from "../controllers/itinerary.controllers/updateItinerary.js";
+import { accountAuth } from "../middlewares/AccountAuth.middleware.js";
 
 const router = Router();
 
@@ -29,6 +30,7 @@ router
 router
   .route("/:planId")
   .post(
+    accountAuth,
     userAuth,
     createItineraryValidation(),
     validationHandler,
@@ -39,6 +41,7 @@ router
 router
   .route("/:planId")
   .put(
+    accountAuth,
     userAuth,
     updateItineraryValidation(),
     validationHandler,

@@ -1,31 +1,25 @@
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import jwt from "jsonwebtoken";
-import { User } from "../models/user.model.js";
+import { CAP_User } from "../models/user.model.js";
 
 export const userAuth = asyncHandler(async (req, _, next) => {
   try {
-    const token =
-      req.cookies?.userAccessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
+    const existedAccount = req.account;
 
-    if (!token) {
-      throw new ApiError(401, "Unauthorized request, Kindly Login!");
-    }
-
-    const decodedToken = jwt.verify(
-      token,
-      process.env.USER_ACCESS_TOKEN_SECRET
+    // Find "CAP_User" role in role of ONE_Account
+    const existedUserRole = existedAccount?.role.find(
+      (option) => option?.name === "CAP_User"
     );
-
-    const user = await User.findById(decodedToken?._id).select("-password");
-
-    if (!user) {
-      // throw new ApiError(401, "Invalid Access Token!");
-      throw new ApiError(401, "Please logout and login again!");
+    if (!existedUserRole) {
+      throw new ApiError(404, "User does not exist, Kindly contact support!");
     }
 
-    req.user = user;
+    const existedUser = await CAP_User.findById(existedUserRole.id);
+    if (!existedUser) {
+      throw new ApiError(404, "User does not exist, Kindly contact support!");
+    }
+
+    req.user = existedUser;
 
     next();
   } catch (error) {

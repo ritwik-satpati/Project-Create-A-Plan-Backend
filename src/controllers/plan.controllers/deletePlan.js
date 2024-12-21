@@ -1,9 +1,9 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { Plan } from "../../models/plan.model.js";
-import { Bookmark } from "../../models/bookmark.model.js";
-import { Itinerary } from "../../models/itinerary.model.js";
+import { CAP_Plan } from "../../models/plan.model.js";
+import { CAP_Bookmark } from "../../models/bookmark.model.js";
+import { CAP_Itinerary } from "../../models/itinerary.model.js";
 
 // *** Delete A Plan ***
 export const deletePlan = asyncHandler(async (req, res) => {
@@ -14,7 +14,7 @@ export const deletePlan = asyncHandler(async (req, res) => {
   const { planId } = req.params;
 
   // Find existedPlan with its id
-  const existedPlan = await Plan.findById(planId);
+  const existedPlan = await CAP_Plan.findById(planId);
 
   // Throw error if existedPlan not found
   if (!existedPlan) {
@@ -27,7 +27,7 @@ export const deletePlan = asyncHandler(async (req, res) => {
   }
 
   // Checking if anyone bookmarked the plan
-  const bookmarkedPlans = await Bookmark.find({ plan: existedPlan._id });
+  const bookmarkedPlans = await CAP_Bookmark.find({ plan: existedPlan._id });
   if (bookmarkedPlans.length > 0) {
     throw new ApiError(
       401,
@@ -38,16 +38,16 @@ export const deletePlan = asyncHandler(async (req, res) => {
   let successMessage = "Plan is deleted successfully";
 
   // Find existedPlan with its id
-  const existedItinerary = await Itinerary.findById(planId);
+  const existedItinerary = await CAP_Itinerary.findById(planId);
 
   // Delete Itinerary first if existedItinerary found
   if (existedItinerary) {
-    await Itinerary.findByIdAndDelete(planId);
+    await CAP_Itinerary.findByIdAndDelete(planId);
     successMessage = "Plan along with Itinerary is deleted successfully";
   }
 
   // Delete the Plan using its id
-  await Plan.findByIdAndDelete(planId);
+  await CAP_Plan.findByIdAndDelete(planId);
 
   // Remove the password field from the user object before sending response
   user.password = undefined;

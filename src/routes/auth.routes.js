@@ -2,30 +2,25 @@ import { Router } from "express";
 
 // ### Middlewares ###
 import {
-  createUserValidation,
   registerUserValidation,
   activeUserValidation,
   loginUserValidation,
 } from "../validations/auth.validations.js";
 import { validationHandler } from "../libs/validationHandler.js";
+import { accountAuth } from "../middlewares/AccountAuth.middleware.js";
 import { userAuth } from "../middlewares/userAuth.middleware.js";
 
 // ### Controllers ###
-import { createUser } from "../controllers/auth.controllers/createUser.js";
 import { registerUser } from "../controllers/auth.controllers/registerUser.js";
 import { activeUser } from "../controllers/auth.controllers/activeUser.js";
 import { loginUser } from "../controllers/auth.controllers/loginUser.js";
-import { getUser } from "../controllers/auth.controllers/getUser.js";
 import { logoutUser } from "../controllers/auth.controllers/logoutUser.js";
+import { getUser } from "../controllers/auth.controllers/getUser.js";
+import { createUser } from "../controllers/auth.controllers/createUser.js";
 
 const router = Router();
 
 // ### Routes ###
-
-// *** User Creation ***
-router
-  .route("/create")
-  .post(createUserValidation(), validationHandler, createUser);
 
 // *** User Registration ***
 router
@@ -42,12 +37,15 @@ router
   .route("/login")
   .post(loginUserValidation(), validationHandler, loginUser);
 
+// *** User Logout ***
+router.route("/logout").post(logoutUser);
+
 // ### Routes => Secured ###
 
 // *** User Information ***
-router.route("/").get(userAuth, getUser);
+router.route("/").get(accountAuth, userAuth, getUser);
 
-// *** User Logout ***
-router.route("/logout").post(logoutUser);
+// *** User Creation ***
+router.route("/create").post(accountAuth, createUser);
 
 export default router;

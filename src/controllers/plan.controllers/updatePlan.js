@@ -1,7 +1,7 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { Plan } from "../../models/plan.model.js";
+import { CAP_Plan } from "../../models/plan.model.js";
 
 // *** Update A Plan ***
 export const updatePlan = asyncHandler(async (req, res) => {
@@ -15,7 +15,7 @@ export const updatePlan = asyncHandler(async (req, res) => {
   const { name, about, access, startDate, endDate, category } = req.body;
 
   // Find existedPlan with its id
-  const existedPlan = await Plan.findById(planId);
+  const existedPlan = await CAP_Plan.findById(planId);
 
   // Throw error if existedPlan not found
   if (!existedPlan) {
@@ -28,7 +28,7 @@ export const updatePlan = asyncHandler(async (req, res) => {
   }
 
   // Update the plan
-  const updatedPlan = await Plan.findByIdAndUpdate(
+  const updatedPlan = await CAP_Plan.findByIdAndUpdate(
     { _id: existedPlan._id },
     {
       name,

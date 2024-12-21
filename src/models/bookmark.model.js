@@ -8,14 +8,14 @@ const bookmarkSchema = new Schema(
     plan: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "Plan",
+      ref: "CAP_Plan",
     },
 
     // User Id
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: "CAP_User",
     },
   },
   {
@@ -25,4 +25,4 @@ const bookmarkSchema = new Schema(
 );
 
 // Export the Bookmark model
-export const Bookmark = mongoose.model("Bookmark", bookmarkSchema);
+export const CAP_Bookmark = mongoose.model("CAP_Bookmark", bookmarkSchema);
