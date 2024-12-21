@@ -1,8 +1,8 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { Plan } from "../../models/plan.model.js";
-import { Itinerary } from "../../models/itinerary.model.js";
+import { CAP_Plan } from "../../models/plan.model.js";
+import { CAP_Itinerary } from "../../models/itinerary.model.js";
 
 // Sample Itinerary Data
 const sampleItinerary = {
@@ -151,7 +151,7 @@ export const createItinerary = asyncHandler(async (req, res) => {
   const { planId } = req.params;
 
   // Find existedItinerary with its id
-  const existedItinerary = await Itinerary.findById(planId);
+  const existedItinerary = await CAP_Itinerary.findById(planId);
 
   // Throw error if existedItinerary found
   if (existedItinerary) {
@@ -159,7 +159,7 @@ export const createItinerary = asyncHandler(async (req, res) => {
   }
 
   // Find existedPlan with its id
-  const existedPlan = await Plan.findById(planId);
+  const existedPlan = await CAP_Plan.findById(planId);
 
   // Throw error if existedPlan not found
   if (!existedPlan) {
@@ -183,7 +183,7 @@ export const createItinerary = asyncHandler(async (req, res) => {
   // throw new ApiError(400, "Itinerary creation failed, Try after sometime!");
 
   // Create a new itinerary
-  const createdItinerary = await Itinerary.create({
+  const createdItinerary = await CAP_Itinerary.create({
     _id: existedPlan._id,
     itinerary: itinerary,
     note: sampleItinerary.note,
@@ -195,7 +195,7 @@ export const createItinerary = asyncHandler(async (req, res) => {
   }
 
   // Update ExistedPlan's updated at
-  const updatedExistedPlan = await Plan.findByIdAndUpdate(
+  const updatedExistedPlan = await CAP_Plan.findByIdAndUpdate(
     existedPlan._id,
     {
       updatedAt: Date.now(),

@@ -1,7 +1,7 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { Plan } from "../../models/plan.model.js";
+import { CAP_Plan } from "../../models/plan.model.js";
 
 // *** Get A / Multiple Plan ***
 export const getPlan = asyncHandler(async (req, res) => {
@@ -14,7 +14,7 @@ export const getPlan = asyncHandler(async (req, res) => {
   // Get A Plan ==> If planId is there
   if (planId) {
     // Find existedPlan with its id
-    const existedPlan = await Plan.findById(planId);
+    const existedPlan = await CAP_Plan.findById(planId);
 
     // Throw error if existedPlan not found
     if (!existedPlan) {
@@ -44,7 +44,7 @@ export const getPlan = asyncHandler(async (req, res) => {
   // Get Multiple Plans ==> If planId is not there
   else {
     // Find existedPlan with its id
-    const existedPlans = await Plan.find({ createdBy: user._id }).sort({
+    const existedPlans = await CAP_Plan.find({ createdBy: user._id }).sort({
       updatedAt: -1,
     });
 

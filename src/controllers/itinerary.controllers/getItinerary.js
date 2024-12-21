@@ -1,10 +1,11 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { Plan } from "../../models/plan.model.js";
-import { Itinerary } from "../../models/itinerary.model.js";
+import { CAP_Plan } from "../../models/plan.model.js";
+import { CAP_Itinerary } from "../../models/itinerary.model.js";
 import jwt from "jsonwebtoken";
-import { User } from "../../models/user.model.js";
+import { CAP_User } from "../../models/user.model.js";
+import { ONE_Account } from "../../models/account.model.js";
 
 // *** Get A Itinerary ***
 export const getItinerary = asyncHandler(async (req, res) => {
@@ -12,7 +13,7 @@ export const getItinerary = asyncHandler(async (req, res) => {
   const { planId } = req.params;
 
   // Find existedPlan with its id
-  let existedPlan = await Plan.findById(planId).populate({
+  let existedPlan = await CAP_Plan.findById(planId).populate({
     path: "createdBy",
     select: "_id name",
   });
@@ -30,7 +31,7 @@ export const getItinerary = asyncHandler(async (req, res) => {
   };
 
   // Find existedItinerary with its id
-  const existedItinerary = await Itinerary.findById(planId);
+  const existedItinerary = await CAP_Itinerary.findById(planId);
 
   // // Throw error if existedItinerary not found
   // if (!existedItinerary) {
@@ -63,19 +64,32 @@ export const getItinerary = asyncHandler(async (req, res) => {
 
     const decodedToken = jwt.verify(
       token,
-      process.env.USER_ACCESS_TOKEN_SECRET
+      process.env.ACCOUNT_ACCESS_TOKEN_SECRET
     );
 
-    const user = await User.findById(decodedToken?._id).select("-password");
+    const existedAccount = await ONE_Account.findById(decodedToken?._id).select(
+      "-password"
+    );
 
-    if (!user) {
-      throw new ApiError(401, "Invalid Access Token!");
+    if (!existedAccount) {
+      throw new ApiError(
+        401,
+        "Plan is not Public, Please logout and login again!"
+      );
+    }
+
+    // Find "CAP_User" role in role of ONE_Account
+    const existedUserRole = existedAccount?.role.find(
+      (option) => option?.name === "CAP_User"
+    );
+    if (!existedUserRole) {
+      throw new ApiError(404, "User does not exist, Kindly contact support!");
     }
 
     // If Plan access type is Private
     if (existedPlan.access === "Private") {
       // Throw error if existedPlan is not created by the user
-      if (existedPlan.createdBy.toString() !== user._id.toString()) {
+      if (existedPlan.createdBy.toString() !== existedUserRole.id.toString()) {
         // throw new ApiError(401, "Not authorized to view!");
         // Return a successful response with the existed plan information
         return res.status(200).json(
@@ -85,7 +99,7 @@ export const getItinerary = asyncHandler(async (req, res) => {
               plan: existedPlan,
               itinerary: null,
             },
-            "Plan is Private"
+            "Plan is Private, Kindly contact the creator"
           )
         );
       }
@@ -103,8 +117,9 @@ export const getItinerary = asyncHandler(async (req, res) => {
       }
     }
 
-    // Remove the password field from the user object before sending response
-    user.password = undefined;
+    // Remove the role & password field from the user object before sending response
+    existedAccount.role = undefined;
+    existedAccount.password = undefined;
   }
 
   // Return a successful response with the existed plan information

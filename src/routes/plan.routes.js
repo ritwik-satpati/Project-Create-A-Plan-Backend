@@ -16,6 +16,7 @@ import { deletePlan } from "../controllers/plan.controllers/deletePlan.js";
 import { updatePlan } from "../controllers/plan.controllers/updatePlan.js";
 import { bookmarkPlan } from "../controllers/plan.controllers/bookmarkPlan.js";
 import { getBookmarkedPlan } from "../controllers/plan.controllers/getBookmarkedPlan.js";
+import { accountAuth } from "../middlewares/AccountAuth.middleware.js";
 
 const router = Router();
 
@@ -26,23 +27,42 @@ const router = Router();
 // *** Create A Plan ***
 router
   .route("/")
-  .post(userAuth, createPlanValidation(), validationHandler, createPlan);
+  .post(
+    accountAuth,
+    userAuth,
+    createPlanValidation(),
+    validationHandler,
+    createPlan
+  );
 
 // *** Get A / Multiple Plan ***
-router.route("/").get(userAuth, getPlan);
+router.route("/").get(accountAuth, userAuth, getPlan);
 
 // *** Delete A Plan ***
 router
   .route("/:planId")
-  .delete(userAuth, deletePlanValidation(), validationHandler, deletePlan);
+  .delete(
+    accountAuth,
+    userAuth,
+    deletePlanValidation(),
+    validationHandler,
+    deletePlan
+  );
 
 // *** Update A Plan ***
 router
   .route("/:planId")
-  .put(userAuth, updatePlanValidation(), validationHandler, updatePlan);
+  .put(
+    accountAuth,
+    userAuth,
+    updatePlanValidation(),
+    validationHandler,
+    updatePlan
+  );
 
 // *** Bookmark / Unbookmark A Plan ***
 router.route("/bookmark").post(
+  accountAuth,
   userAuth,
   // updatePlanValidation(), validationHandler,
   bookmarkPlan
@@ -50,6 +70,7 @@ router.route("/bookmark").post(
 
 // *** Get A / Multiple Bookmarked Plan ***
 router.route("/bookmark").get(
+  accountAuth,
   userAuth,
   // updatePlanValidation(), validationHandler,
   getBookmarkedPlan

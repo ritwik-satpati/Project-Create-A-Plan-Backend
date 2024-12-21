@@ -1,14 +1,14 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { User } from "../../models/user.model.js";
 import { supportedMailDomain } from "../../constants/supportedMailDomain.js";
 import jwt from "jsonwebtoken";
 import sendMail from "../../libs/sendMail.js";
+import { ONE_Account } from "../../models/account.model.js";
 
 // *** User Registration ***
 export const registerUser = asyncHandler(async (req, res) => {
-  // Extract user information from request body
+  // Extract account information from request body
   // const { name, mobile, email, password, gender, queryString } = req.body;
   const { name, email, password, gender, queryString } = req.body;
 
@@ -23,20 +23,20 @@ export const registerUser = asyncHandler(async (req, res) => {
     );
   }
 
-  // Check for existing user with various identifiers
-  const existedUser = await User.findOne({
+  // Check for existing account with various identifiers
+  const existedAccount = await ONE_Account.findOne({
     // $or: [{ email: email.toLowerCase() }, { mobile: mobile }],
     email: email.toLowerCase(),
   });
 
-  // Throw error if user is found
-  if (existedUser) {
-    // throw new ApiError(409, "User with mobile number or email already exist!");
-    throw new ApiError(409, "User with email already exist!");
+  // Throw error if account is found
+  if (existedAccount) {
+    // throw new ApiError(409, "Account with mobile number or email already exist!");
+    throw new ApiError(409, "Account with email already exist, Kindly Login!");
   }
 
-  // Create a new user
-  const newUser = {
+  // Create a new Account
+  const newAccount = {
     name,
     // mobile,
     email: email.toLowerCase(), // Convert email to lowercase for case-insensitive matching
@@ -46,8 +46,8 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   // Create Activation token
   const activationToken = jwt.sign(
-    newUser,
-    process.env.USER_ACTIVATION_SECRET,
+    newAccount,
+    process.env.ACCOUNT_ACTIVATION_SECRET,
     {
       expiresIn: "30m",
     }
@@ -57,9 +57,9 @@ export const registerUser = asyncHandler(async (req, res) => {
   const activationUrl = `${process.env.FRONTEND_URL}/activation/${activationToken}${queryString}`;
 
   await sendMail({
-    email: newUser.email,
+    email: newAccount.email,
     subject: "Activate your account",
-    message: `Hello ${newUser.name}, please click on the link to activate your account: ${activationUrl}`,
+    message: `Hello ${newAccount.name}, please click on the link to activate your account: ${activationUrl}`,
   });
 
   // Return a successful response with the information
@@ -69,7 +69,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       new ApiResponse(
         201,
         { token: activationToken, url: activationUrl },
-        `Please check your email: ${newUser.email} to active your account!`
+        `Please check your email: ${newAccount.email} to active your account!`
       )
     );
 });

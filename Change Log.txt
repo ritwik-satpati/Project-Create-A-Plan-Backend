@@ -1,16 +1,10 @@
-*** 1.0.2.3 ***
+*** 1.0.3.4 ***
 
 A. BUG FIXES::    
+    1x. User Access Token was not being cleared after logout, only on Server-host, not on Localhost.
 
 B. CHANGES::
-    1. Old Register User method renamed to Create User:
-        API: createUser
-        Route: /create
-        Validation: createUserValidation
-    2. Modified Register Method. Check NEW FEATURES C.1 and C.2 for more details. 
-    3. Updated Create Itinerary. Check NEW FEATURES C.3 for details.
+    1. Model names are changed. Added Project Name at first CAP_<model-name>.
 
 C. NEW FEATURES::
-    1. New Register User & Active User methodis added. Email verification required via activation link/token.
-    2. Added additional details - startDate, endDate, category in Plan Model.
-    3. Dynamic Sample Itinerary is added. If both startDate and endDate are included in the plan details in Create Itinerary API.
+    1. New Account Auth System is introduced. ONE_Account & CAP_User is now there.

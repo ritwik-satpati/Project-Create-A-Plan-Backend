@@ -1,13 +1,5 @@
 import { body, oneOf, param } from "express-validator";
 
-// *** Validation for - User Creation ***
-export const createUserValidation = () => [
-  body("name", "Name is required").notEmpty(),
-  body("mobile", "Mobile Number is required").isMobilePhone(),
-  body("email", "Email is required").isEmail(),
-  body("password", "Password is required").notEmpty(),
-];
-
 // *** Validation for - User Registration ***
 export const registerUserValidation = () => [
   body("name", "Name is required").notEmpty(),
