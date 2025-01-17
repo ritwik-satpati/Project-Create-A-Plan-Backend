@@ -20,7 +20,7 @@ const sendMail = async (options) => {
     from: process.env.SMTP_MAIL,
     to: options.email,
     subject: options.subject,
-    text: options.message,
+    text: options.message || undefined,
     html: options.messageHtml || undefined,
   };
 

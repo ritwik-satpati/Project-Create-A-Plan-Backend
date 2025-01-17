@@ -7,7 +7,6 @@ import { ONE_Account } from "../../models/account.model.js";
 
 // *** User Login ***
 export const loginUser = asyncHandler(async (req, res) => {
-  // Extract email and password from the request body
   // const { email, mobile, password } = req.body;
   const { email, password } = req.body;
 

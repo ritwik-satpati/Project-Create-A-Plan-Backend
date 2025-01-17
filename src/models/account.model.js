@@ -146,5 +146,20 @@ accountSchema.methods.generateAccessToken = async function () {
   );
 };
 
+// Method to generate an token for forget password
+accountSchema.methods.forgetPasswordToken = async function () {
+  // Ensure the token secret and expiry are set
+  if (
+    !process.env.ACCOUNT_ACCESS_TOKEN_SECRET ||
+    !process.env.ACCOUNT_ACCESS_TOKEN_EXPIRY
+  ) {
+    throw new Error("Token secret or expiry not defined");
+  }
+  return jwt.sign({ password: this.password }, "", {
+    algorithm: "none",
+    expiresIn: "30m",
+  });
+};
+
 // Export the Account model
 export const ONE_Account = mongoose.model("ONE_Account", accountSchema);

@@ -1,10 +1,14 @@
-*** 1.0.3.4 ***
+*** 1.0.4.5 ***
 
 A. BUG FIXES::    
-    1x. User Access Token was not being cleared after logout, only on Server-host, not on Localhost.
+    1.
 
 B. CHANGES::
-    1. Model names are changed. Added Project Name at first CAP_<model-name>.
+    1. Emails have been updated from Plain-Text to HTML-based format. See Section C.2 for details.
+    2. Updated README.md & SETUP.md.
 
 C. NEW FEATURES::
-    1. New Account Auth System is introduced. ONE_Account & CAP_User is now there.
+    1. A "Forget Password" feature has been introduced, accessible via the forgetPassword and resetPassword controllers.
+    2. New HTML-based email templates have been added for the following scenarios: Activate Your Account, Account Created, Reset Your Password & Password Changed.
+    3. Added CONTRIBUTING.md & CONTRIBUTORS.md.
+    

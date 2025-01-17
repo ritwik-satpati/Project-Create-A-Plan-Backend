@@ -5,6 +5,8 @@ import {
   registerUserValidation,
   activeUserValidation,
   loginUserValidation,
+  resetPasswordValidation,
+  forgetPasswordValidation,
 } from "../validations/auth.validations.js";
 import { validationHandler } from "../libs/validationHandler.js";
 import { accountAuth } from "../middlewares/AccountAuth.middleware.js";
@@ -17,6 +19,8 @@ import { loginUser } from "../controllers/auth.controllers/loginUser.js";
 import { logoutUser } from "../controllers/auth.controllers/logoutUser.js";
 import { getUser } from "../controllers/auth.controllers/getUser.js";
 import { createUser } from "../controllers/auth.controllers/createUser.js";
+import { forgetPassword } from "../controllers/auth.controllers/forgetPassword.js";
+import { resetPassword } from "../controllers/auth.controllers/resetPassword.js";
 
 const router = Router();
 
@@ -39,6 +43,16 @@ router
 
 // *** User Logout ***
 router.route("/logout").post(logoutUser);
+
+// *** Forget Password ***
+router
+  .route("/forget-password")
+  .post(forgetPasswordValidation(), validationHandler, forgetPassword);
+
+// *** Reset Password ***
+router
+  .route("/reset-password/:accountId/:token")
+  .post(resetPasswordValidation(), validationHandler, resetPassword);
 
 // ### Routes => Secured ###
 

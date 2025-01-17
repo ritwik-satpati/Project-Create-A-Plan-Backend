@@ -6,11 +6,16 @@ import jwt from "jsonwebtoken";
 import { cookieOptions } from "../../constants/cookieOptions.js";
 import { ONE_Account } from "../../models/account.model.js";
 import mongoose from "mongoose";
+import sendMail from "../../libs/sendMail.js";
+import { accountCreatedMail } from "../../constants/EmailBody/accountCreatedMail.js";
 
 // *** User Activation ***
 export const activeUser = asyncHandler(async (req, res) => {
   // Extract activationToken information from request params
   const { activationToken } = req.params;
+
+  // Extract queryString from request body
+  const { queryString } = req.body;
 
   // Verify the ACCOUNT_ACTIVATION_SECRET and get account details
   const newAccount = jwt.verify(
@@ -72,6 +77,18 @@ export const activeUser = asyncHandler(async (req, res) => {
 
   // Generate an access token for the user (implementation from Account model method)
   const userAccessToken = await createdAccount.generateAccessToken();
+
+  // Generate forget password url
+  const loginUrl = `${process.env.FRONTEND_URL}/login${
+    queryString && `${queryString}`
+  }`;
+
+  // Send Mail
+  await sendMail({
+    email: createdAccount.email,
+    subject: "Account Created",
+    messageHtml: accountCreatedMail(createdAccount.name, loginUrl),
+  });
 
   // Remove the role & password field from the Account object before sending response
   createdAccount.role = undefined;
