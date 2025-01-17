@@ -7,7 +7,6 @@ const validationHandler = (req, _, next) => {
   if (validationErrors.length != 0) {
     const errorMessage = validationErrors[0]?.msg;
     console.log("error: ", errorMessage);
-    console.log("end");
 
     throw new ApiError(400, errorMessage);
   }

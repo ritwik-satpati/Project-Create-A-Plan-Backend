@@ -179,9 +179,6 @@ export const createItinerary = asyncHandler(async (req, res) => {
     itinerary = dynamicItinerary(existedPlan?.startDate, existedPlan?.endDate);
   }
 
-  console.log(itinerary);
-  // throw new ApiError(400, "Itinerary creation failed, Try after sometime!");
-
   // Create a new itinerary
   const createdItinerary = await CAP_Itinerary.create({
     _id: existedPlan._id,
