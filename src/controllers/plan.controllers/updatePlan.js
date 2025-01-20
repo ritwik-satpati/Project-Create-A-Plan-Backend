@@ -12,7 +12,8 @@ export const updatePlan = asyncHandler(async (req, res) => {
   const { planId } = req.params;
 
   // Extract plan information from request body
-  const { name, about, access, startDate, endDate, category } = req.body;
+  const { name, about, access, startDate, endDate, category, status } =
+    req.body;
 
   // Find existedPlan with its id
   const existedPlan = await CAP_Plan.findById(planId);
@@ -37,6 +38,7 @@ export const updatePlan = asyncHandler(async (req, res) => {
       startDate: startDate || undefined,
       endDate: endDate || undefined,
       category: category || undefined,
+      status,
     },
     { new: true }
   );

@@ -5,7 +5,7 @@ import { supportedMailDomain } from "../../constants/supportedMailDomain.js";
 import jwt from "jsonwebtoken";
 import sendMail from "../../libs/sendMail.js";
 import { ONE_Account } from "../../models/account.model.js";
-import { activateYourAccountMail } from "../../constants/EmailBody/activateYourAccountMail.js";
+import { activateYourAccountMail } from "../../EmailBody/activateYourAccountMail.js";
 
 // *** User Registration ***
 export const registerUser = asyncHandler(async (req, res) => {

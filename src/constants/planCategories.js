@@ -1,6 +1,7 @@
 export const planCategories = [
   "Family Trip",
   "Friend Trip",
+  "Couple Trip",
   "Weekend Trip",
   "Solo Trip",
   "Community Trip",
@@ -8,5 +9,8 @@ export const planCategories = [
   "Honeymoon Trip",
   "Corporate Trip",
   "International Trip",
-  "Multi-Nation Trip",
+  "Multi-National Trip",
+  "Bike Trip",
+  "Car Trip",
+  "Backpacking Trip",
 ];

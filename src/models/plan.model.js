@@ -19,6 +19,12 @@ const planSchema = new Schema(
       trim: true,
     },
 
+    //
+    status: {
+      type: String,
+      default: "Created", // "Created" / "Updated" / "Ongoing" / "Completed"
+    },
+
     // Access Type
     access: {
       type: String,

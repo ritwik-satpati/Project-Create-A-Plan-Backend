@@ -16,6 +16,7 @@ export const createPlan = asyncHandler(async (req, res) => {
     name,
     about: about || undefined,
     access,
+    status: "Created",
     startDate: startDate || undefined,
     endDate: endDate || undefined,
     category: category || undefined,
