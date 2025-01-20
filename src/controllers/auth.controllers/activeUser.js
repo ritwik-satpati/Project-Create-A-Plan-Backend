@@ -7,7 +7,7 @@ import { cookieOptions } from "../../constants/cookieOptions.js";
 import { ONE_Account } from "../../models/account.model.js";
 import mongoose from "mongoose";
 import sendMail from "../../libs/sendMail.js";
-import { accountCreatedMail } from "../../constants/EmailBody/accountCreatedMail.js";
+import { accountCreatedMail } from "../../EmailBody/accountCreatedMail.js";
 
 // *** User Activation ***
 export const activeUser = asyncHandler(async (req, res) => {

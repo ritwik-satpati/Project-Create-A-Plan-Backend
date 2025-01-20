@@ -2,7 +2,7 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { ONE_Account } from "../../models/account.model.js";
-import { resetYourPasswordMail } from "../../constants/EmailBody/resetYourPasswordMail.js";
+import { resetYourPasswordMail } from "../../EmailBody/resetYourPasswordMail.js";
 import sendMail from "../../libs/sendMail.js";
 
 // *** Forget Password ***

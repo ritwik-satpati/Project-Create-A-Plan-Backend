@@ -1,6 +1,6 @@
 {
     "name": "create-a-plan",
-    "version": "1.0.4.5",
+    "version": "1.0.5.6",
     "description": "A JavaScript based backend project for Creating Plans & Itinerary for trips.",
     "main": "index.js",
     "type": "module",

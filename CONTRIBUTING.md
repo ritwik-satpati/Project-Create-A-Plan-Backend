@@ -29,4 +29,4 @@
   - Push your branch to your fork:
     `git push origin`
 - Submit a Pull Request
-  - Go to your forked repository on GitHub and click the `New Pull Request` button.
+  - Go to your updated forked repository on GitHub and click the `New Pull Request` button with title as `<Fix: Issue description or Add: Feature description>` and message as what is updated `Change Log.txt`.

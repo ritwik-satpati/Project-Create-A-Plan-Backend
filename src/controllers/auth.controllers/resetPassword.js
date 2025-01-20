@@ -4,7 +4,7 @@ import { ApiResponse } from "../../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import { ONE_Account } from "../../models/account.model.js";
 import bcrypt from "bcrypt";
-import { passwordChangedMail } from "../../constants/EmailBody/passwordChangedMail.js";
+import { passwordChangedMail } from "../../EmailBody/passwordChangedMail.js";
 import sendMail from "../../libs/sendMail.js";
 
 // *** Reser Password ***

@@ -1,14 +1,13 @@
-*** 1.0.4.5 ***
+*** 1.0.5.6 ***
 
 A. BUG FIXES::    
     1.
 
 B. CHANGES::
-    1. Emails have been updated from Plain-Text to HTML-based format. See Section C.2 for details.
-    2. Updated README.md & SETUP.md.
+    1. Added some more items in Plan types & Plan Categories in Constants.
+    2. Updated CONTRIBUTING.md.
+    3. Changed EmailBody folder path with necessary changes in Auth Controllers.
 
 C. NEW FEATURES::
-    1. A "Forget Password" feature has been introduced, accessible via the forgetPassword and resetPassword controllers.
-    2. New HTML-based email templates have been added for the following scenarios: Activate Your Account, Account Created, Reset Your Password & Password Changed.
-    3. Added CONTRIBUTING.md & CONTRIBUTORS.md.
+    1. Added Status in Plan Model and necessary changes in Plan & Itinerary Controllers.
     

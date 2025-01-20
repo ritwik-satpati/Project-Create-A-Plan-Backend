@@ -195,7 +195,8 @@ export const createItinerary = asyncHandler(async (req, res) => {
   const updatedExistedPlan = await CAP_Plan.findByIdAndUpdate(
     existedPlan._id,
     {
-      updatedAt: Date.now(),
+      status: "Updated",
+      // updatedAt: Date.now(),
     },
     { new: true }
   );
